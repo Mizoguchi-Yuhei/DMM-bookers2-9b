@@ -10,6 +10,8 @@ class BooksController < ApplicationController
     @user = current_user
     @books = Book.all
     @new_book = Book.new
+    @q = Book.ransack(params[:q])
+    @books_count = @q.result(distinct: true).includes(:user)
   end
 
   def create

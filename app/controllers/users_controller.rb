@@ -6,9 +6,8 @@ class UsersController < ApplicationController
     @books = Book.all
     @new_book = Book.new
     # 日付検索
-    @q = User.ransack(params[:q])
-    @books_count = @q.result(distinct: true).includes(:books)
-    byebug
+    @q = Book.ransack(params[:q])
+    @books_count = @q.result(distinct: true).includes(:user)
   end
 
   def index
