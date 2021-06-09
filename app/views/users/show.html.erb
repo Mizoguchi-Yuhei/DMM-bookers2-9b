@@ -9,8 +9,15 @@
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>
       <%= render 'books/index',books: @user.books %>
-      <div id="search">
-        <%= render "books/books_count" %>
+      <%= form_with url: user_count_path(@user), method: :get, remote: true do |f| %>
+        <%= f.date_field :created_at %>
+        <%= f.submit "検索" %>
+      <% end %>
+
+      <div id="count">
+        <% if @books_count.present? %>
+          <%= render "users/books_count" %>
+        <% end %>
       </div>
     </div>
   </div>

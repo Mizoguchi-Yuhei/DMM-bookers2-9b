@@ -3,11 +3,17 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @books = Book.all
+    @books = @user.books
     @new_book = Book.new
-    # 日付検索
-    @q = Book.ransack(params[:q])
-    @books_count = @q.result(distinct: true).includes(:user)
+  end
+
+  def count
+    @user = User.find(params[:user_id])
+    @books = @user.books
+    @book = Book.new
+    if created_at = params[:created_at]
+      @books_count = @books.where(["created_at LIKE ? ", "#{created_at}%"])
+    end
   end
 
   def index
@@ -29,7 +35,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:name, :introduction, :profile_image, :books)
+    params.require(:user).permit(:name, :introduction, :profile_image)
   end
 
   def ensure_correct_user
