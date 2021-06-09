@@ -5,6 +5,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @books = Book.all
     @new_book = Book.new
+    # 日付検索
+    @count = Book.where(id: user_id = current_user.id)
+    @q = @count.ransack(params[:q])
+    @books_count = @q.result(distinct: true)
   end
 
   def index
