@@ -1,5 +1,5 @@
 <%= search_form_for(@q, remote: true) do |f| %>
-  <%= f.date_field :created_at_eq %>
+  <%= f.date_field :books_created_at_eq %>
   <%= f.submit "検索" %>
   <h4>検索結果</h4>
   <table class="table table-bordered">

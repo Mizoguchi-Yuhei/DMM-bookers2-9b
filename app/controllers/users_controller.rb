@@ -6,9 +6,9 @@ class UsersController < ApplicationController
     @books = Book.all
     @new_book = Book.new
     # 日付検索
-    @count = Book.where(id: user_id = current_user.id)
-    @q = @count.ransack(params[:q])
-    @books_count = @q.result(distinct: true)
+    @q = User.ransack(params[:q])
+    @books_count = @q.result(distinct: true).includes(:books)
+    byebug
   end
 
   def index
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:name, :introduction, :profile_image)
+    params.require(:user).permit(:name, :introduction, :profile_image, :books)
   end
 
   def ensure_correct_user
